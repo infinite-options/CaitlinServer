@@ -44,15 +44,26 @@ def identify_file(subscription_key, file_path, force_short_audio, profile_ids):
     """
     helper = IdentificationServiceHttpClientHelper.IdentificationServiceHttpClientHelper(
         subscription_key)
+    print(file_path)
+    print(force_short_audio.lower())
+    print(profile_ids)
 
-    # identification_response = helper.identify_file(
-    #     file_path, profile_ids,
-    #     force_short_audio.lower() == "true")
+    profiles = helper.get_all_profiles()
+    profile_id = []
+    tmp = ''
+    for profile in profiles:
+        if profile.get_enrollment_status() == 'Enrolled':
+           tmp = '(' + profile.get_profile_id() + ')'
+           profile_id.append(tmp)
+    
+    identification_response = helper.identify_file(
+        file_path, profile_id,
+        force_short_audio.lower() == "true")
 
-    # print('Identified Speaker = {0}'.format(identification_response.get_identified_profile_id()))
-    # print('Confidence = {0}'.format(identification_response.get_confidence()))
-    #message = 'Identified Speaker = {0}'.format(identification_response.get_identified_profile_id())
-    return "identify_file function is running"
+    print('Identified Speaker = {0}'.format(identification_response.get_identified_profile_id()))
+    print('Confidence = {0}'.format(identification_response.get_confidence()))
+    message = 'Identified Speaker = {0}'.format(identification_response.get_identified_profile_id()) + 'Confidence = {0}'.format(identification_response.get_confidence())
+    return message
 
 
 

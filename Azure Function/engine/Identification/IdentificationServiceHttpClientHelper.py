@@ -262,6 +262,9 @@ class IdentificationServiceHttpClientHelper:
             if len(test_profile_ids) < 1:
                 raise Exception('Error identifying file: no test profile IDs are provided.')
             test_profile_ids_str = ','.join(test_profile_ids)
+            print("!: " + urllib.parse.quote(test_profile_ids_str))
+            print("!!: " + test_profile_ids_str)
+
             request_url = '{0}?identificationProfileIds={1}&{2}={3}'.format(
                 self._IDENTIFICATION_URI,
                 urllib.parse.quote(test_profile_ids_str),
@@ -269,6 +272,11 @@ class IdentificationServiceHttpClientHelper:
                 force_short_audio)
 
             # Prepare the body of the message
+            print("starting calling API function")
+            print("1:" + self._BASE_URI)
+            print("2:" + self._STREAM_CONTENT_HEADER_VALUE)
+            print("3:" + request_url)
+
             with open(file_path, 'rb') as body:
                 # Send the request
                 res, message = self._send_request(
@@ -277,16 +285,21 @@ class IdentificationServiceHttpClientHelper:
                     request_url,
                     self._STREAM_CONTENT_HEADER_VALUE,
                     body)
+            print("starting if statement function")
+            print(res.status)
+            print(self._STATUS_OK)
 
             if res.status == self._STATUS_OK:
                 # Parse the response body
+                print("starting 1 function")
                 return IdentificationResponse.IdentificationResponse(json.loads(message))
             elif res.status == self._STATUS_ACCEPTED:
+                print("starting 2 function")
                 operation_url = res.getheader(self._OPERATION_LOCATION_HEADER)
-
                 return IdentificationResponse.IdentificationResponse(
                     self._poll_operation(operation_url))
             else:
+                print("starting 3 function")
                 reason = res.reason if not message else message
                 raise Exception('Error identifying file: ' + reason)
         except:
