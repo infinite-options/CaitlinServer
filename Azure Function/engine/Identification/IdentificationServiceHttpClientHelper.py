@@ -79,14 +79,16 @@ class IdentificationServiceHttpClientHelper:
                 self._BASE_URI,
                 self._IDENTIFICATION_PROFILES_URI,
                 self._JSON_CONTENT_HEADER_VALUE)
-
+            
             if res.status == self._STATUS_OK:
                 # Parse the response body
                 profiles_raw = json.loads(message)
                 return [IdentificationProfile.IdentificationProfile(profiles_raw[i])
                         for i in range(0, len(profiles_raw))]
             else:
+                print("!!!!")
                 reason = res.reason if not message else message
+                print(reason)
                 raise Exception('Error getting all profiles: ' + reason)
         except:
             logging.error('Error getting all profiles.')

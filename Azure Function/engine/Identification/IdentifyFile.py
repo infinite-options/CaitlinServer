@@ -55,6 +55,7 @@ def identify_file(subscription_key, file_path, force_short_audio, profile_ids):
         if profile.get_enrollment_status() == 'Enrolled':
            tmp = '(' + profile.get_profile_id() + ')'
            profile_id.append(tmp)
+    print(profiles)
     
     identification_response = helper.identify_file(
         file_path, profile_id,
