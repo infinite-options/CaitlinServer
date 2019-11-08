@@ -10,7 +10,7 @@ from .Identification.IdentifyFile import function2
 from .downloadFile import run_sample
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
-    #block_blob_service = BlockBlobService(account_name='xamarinblob', account_key='0Yaoeff3q/UxWIPoRernkxfLS+ulk2fR6YrE1CZPzx3/utu2ks6pLzXVOk/lmBh7sAhxp2enqYoIMLcRM7X+lQ==')
+    #block_blob_service = BlockBlobService(account_name='', account_key='')
     
     __location__ = os.path.realpath(
     os.path.join(os.getcwd(), os.path.dirname(__file__)))
